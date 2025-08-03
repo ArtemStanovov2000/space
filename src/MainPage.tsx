@@ -1,10 +1,15 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { createUseStyles } from "react-jss";
 import Navigation from "./navigation/Navigation";
+import Window from "./window/Window";
 
 
 const useStyles = createUseStyles({
-    main: {},
+    main: {
+        display: "flex",
+        flexDirection: "column",
+        minHeight: "100vh"
+    },
 });
 
 const MainPage: FC = () => {
@@ -12,7 +17,8 @@ const MainPage: FC = () => {
 
     return (
         <div className={classes.main}>
-            <Navigation/>
+            <Navigation />
+            <Window />
         </div>
     )
 }
