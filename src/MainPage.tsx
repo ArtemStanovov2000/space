@@ -6,9 +6,9 @@ import Window from "./window/Window";
 
 const useStyles = createUseStyles({
     main: {
-        display: "flex",
-        flexDirection: "column",
-        minHeight: "100vh"
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh'
     },
 });
 
