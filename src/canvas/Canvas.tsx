@@ -1,12 +1,14 @@
 import { useEffect, useRef } from "react";
 import { createUseStyles } from "react-jss";
 import type { FC } from "react";
+import { draw } from "./draw/draw";
 
 const useStyles = createUseStyles({
     canvas: {
         display: "block",
         width: "100%",
         height: "100%",
+        cursor: "none"
     },
 });
 
@@ -26,20 +28,6 @@ const Canvas: FC = () => {
         let animationFrameId: number | null = null;
         let dpr = window.devicePixelRatio || 1;
 
-        const draw = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "red";
-            ctx.beginPath();
-            ctx.arc(
-                positionRef.current.x,
-                positionRef.current.y,
-                10 * dpr, // Учитываем DPR в размерах
-                0,
-                Math.PI * 2
-            );
-            ctx.fill();
-        };
-
         const handleMouseMove = (e: MouseEvent) => {
             const rect = canvas.getBoundingClientRect();
             positionRef.current = {
@@ -51,7 +39,7 @@ const Canvas: FC = () => {
 
             if (!animationFrameId) {
                 animationFrameId = requestAnimationFrame(() => {
-                    draw();
+                    draw(ctx, canvas.width, canvas.height, positionRef.current.x, positionRef.current.y, dpr);
                     animationFrameId = null;
                 });
             }
@@ -66,7 +54,7 @@ const Canvas: FC = () => {
 
             ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.scale(dpr, dpr);
-            draw();
+            draw(ctx, canvas.width, canvas.height, positionRef.current.x, positionRef.current.y, dpr);
         };
 
         const resizeObserver = new ResizeObserver(handleResize);
